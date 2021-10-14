@@ -1,0 +1,115 @@
+{
+  "oms": {
+    "config": {
+      "idx": 1191,
+      "user": "oms",
+      "Referer": "https://10.60.34.197:8100/cron/edit_cron.cgi",
+      "save_url": "https://10.60.34.197:8100/cron/save_cron.cgi",
+      "execute_url": "https://10.60.34.197:8100/cron/exec_cron.cgi?idx={}"
+    },
+    "match_payment_info_cb": {
+      "desc": "匹配正常CB订单",
+      "cmd": "php /data/www/devel/oms/daemon/payment/auto_match_payment_info_cb.php -o {}",
+      "comment": "自动匹配cb  --李军"
+    },
+    "匹配订单": {
+      "desc": "匹配除CB外的正常订单",
+      "cmd": "php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php  45  --order_sn {}",
+      "comment": "自营匹配脚本【包括SOA匹配订单】 --李军"
+    },
+    "match_payment_info_nopay": {
+      "desc": "匹配服装、电子的COD订单",
+      "cmd": "php /data/www/devel/oms/daemon/cod/payment/auto_match_payment_info_nopay.php -o {}",
+      "comment": "自动匹配自营cod(货到付款) --李军"
+    },
+    "soa_mq_oms_received": {
+      "desc": "联合订单导单脚本",
+      "cmd": "flock -xn /tmp/MQ_SoaOrderCancelReceivedUrgent_zaful.lock -c 'php /data/www/devel/oms/daemon/interface_mq/soa/MQ_SoaOrderCancelReceivedUrgent.php --mq_client web_zf_v2_direct_string  --receive_name unionOrderPush_OMS  --mq_send oms_to_web_v2_direct_json  --send_name orderError_SOA_ZF'",
+      "comment": "SOA-ZAFUL联合订单 导单  --李军"
+    },
+    "soa_order_into_mq": {
+      "desc": "联合订单投递脚本",
+      "cmd": "flock -xn /tmp/MQ_SoaOrderIntoMq1.lock -c 'php /data/www/devel/oms/daemon/interface_mq/soa/MQ_SoaOrderIntoMq.php -s {} -n  {}'",
+      "comment": "推送SOA原始数据到自销MQ --李军"
+    },
+    "get_soa_mq_into_oms": {
+      "desc": "联合订单消费脚本",
+      "cmd": "php /data/www/devel/oms/daemon/interface_mq/soa/MQ_SoaOrderGetFromMqIntoOms.php",
+      "comment": "源始数据进入暂存区 --李军"
+    },
+    "syn_case_origin_adyen": {
+      "desc": "同步adyen case源数据到中间表",
+      "cmd": "php /data/www/devel/oms/daemon/case/auto_sync_adyen_detail_to_origin.php --startTime '{}' --endTime '{}' --limit 1000",
+      "comment": "同步adyen case源数据到中间表 --李军"
+    },
+    "推送异常工单到wos": {
+      "desc": "oms推送异常到wos生成工单",
+      "cmd": "flock -xn /tmp/wos_PushToWos.lock -c 'php /data/www/devel/oms/daemon/wos/question/PushToWos.php'",
+      "comment": "推送异常到WOS生成工单 --李军"
+    },
+    "同步配货单到wms": {
+      "desc": "同步配货单到wms",
+      "cmd": "php /data/www/devel/oms/daemon/picking/picking_order_to_wms.php -o {}",
+      "comment": "同步配货单到wms --李军"
+    },
+    "同步soa订单": {
+      "desc": "接收soa订单",
+      "cmd": "flock -xn /tmp/MQ_OrderControllerZF.lock -c 'php /data/www/devel/oms/daemon/interface_mq/web/MQ_OrderController.php 45'",
+      "comment": "同步soa订单 --李军"
+    },
+    "同步soa付款单": {
+      "desc": "接收soa付款单",
+      "cmd": "php /data/www/devel/oms/daemon/interface_mq/soa/MQ_IntegratedPaymentController.php",
+      "comment": "同步soa付款单 --李军"
+    },
+    "退款到原支付": {
+      "desc": "推送退款请求给soa type【AWX:826】",
+      "cmd": "flock -xn /tmp/wos_PushToWos.lock -c 'php /data/www/devel/oms/daemon/refund/auto_common_refund.php --payment_type {}'",
+      "comment": "推送退款请求给soa --李军"
+    },
+    "退款到电子钱包": {
+      "desc": "推送退款请求给soa apply_sn:退款申请编号",
+      "cmd": "php /data/www/devel/oms/daemon/wallet/sync_wallet_refund_to_soa.php --apply_sn {}",
+      "comment": "推送电子钱包退款请求给soa --李军"
+    },
+    "地址异常生成电联工单": {
+      "desc": "地址异常生成电联工单",
+      "cmd": "flock -xn /tmp/oms_AddressAbnormal.lock -c 'php /data/www/devel/oms/daemon/wos/question/AddressAbnormal.php -day 1'",
+      "comment": "地址异常生成电联工单 --李军"
+    },
+    "自动去信加入队列": {
+      "desc": "去信数据（邮件或者ticket）写入队列",
+      "cmd": "php /data/www/devel/oms/daemon/system/auto_send_message.php ",
+      "comment": "去信数据写入队列表s_oms_send_email --李军"
+    },
+    "推送邮件队列列表到SMS": {
+      "desc": "去信数据写入邮件队列",
+      "cmd": "php  /data/www/devel/oms/daemon/email/sync_unity_email_to_sms.php --sms_type {}",
+      "comment": "去信数据写入邮件队列SMS --李军"
+    },
+    "同步订单问题状态到WOS": {
+      "desc": "wos-状态同步到WOS-订单问题状态",
+      "cmd": "flock -xn /tmp/OrderQuestion.lock -c 'php /data/www/devel/oms/daemon/wos/SyncDiffStatus/OrderQuestion.php -order_sn {}'",
+      "comment": "wos-状态同步到WOS-订单问题状态 --李军"
+    }
+  },
+  "sms": {
+    "config": {
+      "idx": 124,
+      "user": "www",
+      "Referer": "https://10.60.48.185:8100/cron/edit_cron.cgi",
+      "save_url": "https://10.60.48.185:8100/cron/save_cron.cgi",
+      "execute_url": "https://10.60.48.185:8100/cron/exec_cron.cgi?idx={}"
+    },
+    "send_email": {
+      "desc": "发送邮件信息",
+      "cmd": "/data/www/devel/sms/daemon/run_monitor.sh  ticket/send_email.php",
+      "comment": "提示邮件发送 --李军"
+    },
+    "auto_generate_ticket": {
+      "desc": "根据ticket生成邮件（并发送TK）",
+      "cmd": "/data/www/devel/sms/daemon/run_monitor.sh ticket/auto_generate_ticket_email_queue.php",
+      "comment": "主动去信队列生成ticket --李军"
+    }
+  }
+}

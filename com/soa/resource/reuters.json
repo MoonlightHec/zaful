@@ -1,0 +1,44 @@
+{
+    "ts":1628573908,
+    "market_data":{
+        "currencypairs":[
+            {
+                "last":"1.2575",
+                "ric":"CAD=X",
+                "symbol":"USDCAD",
+                "net_change":"0.0001",
+                "percent_change":"0.00795292",
+                "day_high":"1.2589",
+                "day_low":"1.257",
+                "fiftytwo_wk_high":"1.342",
+                "fiftytwo_wk_low":"1.2002",
+                "time":"2021-08-10 05:09:00",
+                "bid":"1.2575",
+                "ask":"1.2579",
+                "open":"1.2572",
+                "prevClose":"1.2574",
+                "modified":"2021-08-10 05:47:33"
+            },
+            {
+                "last":"1.3656",
+                "ric":"USDAUD=X",
+                "symbol":"USDAUD",
+                "net_change":"0.0023",
+                "percent_change":"0.168708",
+                "day_high":"1.3667",
+                "day_low":"1.3633",
+                "fiftytwo_wk_high":"1.4302",
+                "fiftytwo_wk_low":"1.2484",
+                "time":"2021-08-10 04:59:54",
+                "bid":"1.3656",
+                "ask":"1.3657",
+                "open":"1.3631",
+                "prevClose":"1.3633",
+                "modified":"2021-08-10 05:38:28"
+            }
+        ]
+    },
+    "status":{
+        "code":200
+    }
+}

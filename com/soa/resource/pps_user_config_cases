@@ -1,0 +1,178 @@
+config_case :
+  -
+    cases :
+      -
+        method : queryUserConfig
+        assert_method : assert_select
+        body :
+          id : 5
+          isNew : True
+        assert :
+          config_key :
+      -
+        method : queryUserConfig
+        assert_method : assert_select
+        body :
+          id : 5
+          isNew : False
+        assert :
+          config_key : soa_switch_3ds_program
+  
+  -
+    cases :
+      -
+        method : deleteUserConfig
+        assert_method : assert_delete
+        body :
+          id : 1
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : False
+        assert :
+          message : 用户配置不存在
+      -
+        method : deleteUserConfig
+        assert_method : assert_delete
+        body :
+          id : 1
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : True
+        assert :
+          message : ''
+  
+  -
+    cases :
+      -
+        method : addUserConfig
+        assert_method : assert_add
+        body :
+          configKey : soa_switch_payment_program
+          configName : 按照收货国家过渡
+          configDesc : 是否走bin路由校验
+          configContent : [{"type":"switch","key":"switch_payment_program","value":1}]
+          siteCode : ZF
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : False
+        assert :
+          configKey : soa_config_key_test
+          db_name : pay_user_config
+          message : key已存在，请重新提交
+      -
+        method : addUserConfig
+        assert_method : assert_add
+        body :
+          configKey : soa_3dscountry
+          configName : soa_3dscountry
+          configDesc : 是否为EAA国家
+          configContent :
+          siteCode : ZF
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : True
+        assert :
+          configKey : soa_config_key_test
+          db_name : pay_user_config_new
+          message : ''
+      -
+        method : addUserConfig
+        assert_method : assert_add
+        body :
+          configKey : soa_3dscardtype
+          configName : soa_3dscardtype
+          configDesc : 按卡种决定是否走3D 2.0
+          configContent :
+          siteCode : ZF
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : True
+      -
+        method : addUserConfig
+        assert_method : assert_add
+        body :
+          configKey : soa_switch_3ds_program
+          configName : soa_switch_3ds_program
+          configDesc : 按BIN国家过渡，是否走3D2.0抛送
+          configContent : [{"type":"switch","key":"switch_3ds_program","value":0}]
+          siteCode : ZF
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : True
+  -
+    cases :
+      -
+        method : updateUserConfig
+        assert_method : assert_update
+        body :
+          id : 1
+          configKey : soa_config_key_test
+          configName : soa用户配置测试configName-update
+          configDesc : sao用户配置测试configDesc-update
+          configContent : sao用户配置测试configContent-update
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : False
+        assert :
+          configKey : soa_config_key_test
+          db_name : pay_user_config_new
+          message : '用户配置不存在'
+      
+      -
+        method : updateUserConfig
+        assert_method : assert_update
+        body :
+          id : 1
+          configKey : soa_config_key_test
+          configName : soa用户配置测试configName-update
+          configDesc : sao用户配置测试configDesc-update
+          siteCode : ZF
+          configContent : sao用户配置测试configContent-update
+          logInfo :
+            userId : 188265
+            userName : lijun7
+            ip : 10.33.2.245
+          isNew : True
+        assert :
+          configKey : soa_config_key_test
+          db_name : pay_user_config_new
+          message : ''
+  
+  -
+    cases :
+      -
+        method : queryUserConfigList
+        assert_method : assert_select_list
+        body :
+          configKey : soa_config_key
+          configName :
+          pageSize : 20
+          pageNo : 1
+          isNew : True
+        assert :
+          config_key_amount : 2
+      -
+        method : queryUserConfigList
+        assert_method : assert_select_list
+        body :
+          configKey : soa_config_key
+          configName :
+          pageSize : 20
+          pageNo : 1
+          isNew : False
+        assert :
+          config_key_amount : 1

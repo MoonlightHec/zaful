@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OMS</title>
+</head>
+<body>
+<style>
+    .order_info {
+        width: 400px;
+        border: 1px solid #ccc;
+        float: left;
+        box-sizing: border-box;
+    }
+</style>
+<div>
+    <div>选择功能</div>
+    <div>
+        <select>
+            <option>oms造单</option>
+            <option>Webmin脚本</option>
+        </select>
+        <input type="submit">
+        <br><br><br>
+    </div>
+    <div style="display:inline">
+        <form action="http://localhost:8080/mytools/oms/create_order" target="_blank" method="POST">
+            <div class="order_info">
+                <label style="height:25px;font-size:26px"><br>订单信息：</label>
+                <div>
+                    <label><br>顾客编号：*</label>
+                    <input name="customer_id" value="775">
+                </div>
+                <div>
+                    <label><br>订单编号：*</label>
+                    <input name="order_sn" disabled> (自动生成)
+                </div>
+                <div>
+                    <label><br>事业部：*</label>
+                    <select name="department_id">
+                        <option value="42" selected>服装事业部</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>订单来源：*</label>
+                    <select name="order_from">
+                        <option value="45" selected>zaful.com</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>订单类型：*</label>
+                    <select name="settlement_id" >
+                        <option value="1" selected>先款后货</option>
+                        <option value="2" disabled="disabled">预收定金</option>
+                        <option value="3" disabled="disabled">账期</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>订单币种：*</label>
+                    <input name="order_currency" value="USD">
+                </div>
+                <div>
+                    <label><br>订单汇率：*</label>
+                    <input name="order_currency_rate" value="1.0000000000">
+                </div>
+                <div>
+                    <label><br>Email：*</label>
+                    <input name="receiver_email" value="lijun7@globalegrow.com">
+                </div>
+                <div>
+                    <label><br>姓名：*</label>
+                    <input name="receiver_name" value="李军7">
+                </div>
+                <div>
+                    <label><br>详情地址1：*</label>
+                    <input name="receiver_address_1" value="address_1">
+                </div>
+                <div>
+                    <label><br>详情地址2：*</label>
+                    <input name="receiver_address_2" value="address_2">
+                </div>
+                <div>
+                    <label><br>城市：*</label>
+                    <input name="receiver_city" value="ADELSHOFEN">
+                </div>
+                <div>
+                    <label><br>州/省：*</label>
+                    <input name="receiver_province" value="Alaska">
+                </div>
+                <div>
+                    <label><br>邮编：*</label>
+                    <input name="receiver_postcode" value="55555">
+                </div>
+                <div>
+                    <label><br>国家：*</label>
+                    <input name="receiver_country_code" value="DE">
+                </div>
+                <div>
+                    <label><br>电话：*</label>
+                    <input name="receiver_tel" value="545775444">
+                </div>
+                <div>
+                    <label><br>挂号费：*</label>
+                    <input name="registered_fee" value="0.5">
+                </div>
+                <div>
+                    <label><br>保险费：*</label>
+                    <input name="insurance_fee" value="0.1">
+                </div>
+                <div>
+                    <label><br>运费：*</label>
+                    <input name="shipping_fee" value="1.5">
+                </div>
+                <div>
+                    <label><br>是否需要发票：</label>
+                    <select name="is_invoice">
+                        <option value="1">是</option>
+                        <option value="0" selected>否</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>备注内容：</label>
+                    <input name="remark" value="">
+                </div>
+                <div>
+                    <label><br>发货仓库：</label>
+                    <select name="stock_id">
+                        <option value="1">肇庆01仓</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>物流方式：</label>
+                    <select name="express_id">
+                        <option value="17" selected>中国邮政小包挂号</option>
+                    </select>
+                </div>
+                <div style="display: none">
+                    <label><br>express_appoint：</label>
+                    <input value="0" >
+                </div>
+                <div>
+                    <label><br>是否拆包：</label>
+                    <select name="is_unpacking">
+                        <option value="1">是</option>
+                        <option value="0" selected>否</option>
+                    </select>
+                </div>
+                <div>
+                    <label><br>客户父称：</label>
+                    <input name="customer_middle_name" value="">
+                </div>
+                <div>
+                    <label><br>护照编号：</label>
+                    <input name="customer_passport_serial" value="">
+                </div>
+                <div>
+                    <label><br>护照号：</label>
+                    <input name="customer_passport" value="">
+                </div>
+                <div>
+                    <label><br>护照发证日期：</label>
+                    <input name="customer_passport_issue_date" value="">
+                </div>
+
+            </div>
+            <div class="order_info">
+                <div>
+                    <label style="height:25px;font-size:26px"><br>支付方式:</label>
+                    <div>
+                        <label><br>支付方式：</label>
+                        <select name="pay_way">
+                            <option value="9" selected>客户预存款</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label><br>付款id：</label>
+                        <select name="pay_id">
+                            <option value="20210810134055" selected>20210810134055</option>
+                        </select>
+                    </div>
+                </div>
+                <div><br><br>
+                    <label style="height:25px;font-size:26px">商品信息:</label>
+                    <input type="button" name="add_sku_btn" value="+"></input>
+                    <div>
+                        <div>
+                            <label><br>sku：*</label>
+                            <input name="sku" value="148786003">
+                        </div>
+                        <div>
+                            <label><br>产品价格：*</label>
+                            <input name="price" value="2.1">
+                        </div>
+                        <div>
+                            <label><br>购买数量：*</label>
+                            <input name="qty" value="1">
+                            <div>
+                                <label><br>备注：</label>
+                                <input name="remark" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="创建订单" style="height:40px;width:100px;font-size:20px;font-style: revert">
+            </div>
+        </form>
+    </div>
+    <div style="display:none">
+        <div>
+            这是webmin
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

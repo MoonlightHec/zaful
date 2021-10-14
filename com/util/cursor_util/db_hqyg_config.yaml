@@ -1,0 +1,79 @@
+#数据库连接配置
+PAY_old:
+    host : 10.40.6.150
+    port : 3306
+    user : java-service
+    passwd : java123456
+    db : pay
+    charset : utf8
+PAY:
+    host : 10.38.2.72
+    port : 3306
+    user : java-service
+    passwd : java123456
+    db : pay
+    charset : utf8
+
+PLM :
+    host : 192.168.0.202
+    port : 3306
+    user : plm_all
+    passwd : plm_all_pw
+    db : plm_new
+    charset : utf8
+    
+PMS :
+    host : 192.168.7.165
+    port : 3306
+    user : pms_bus_acc
+    passwd : pmsERPtest
+    db : pms_new
+    charset : utf8
+    
+SPM :
+    host : 192.168.0.202
+    port : 3306
+    user : provider_wr
+    passwd : bLipJo4y
+    db : provider_new
+    charset : utf8
+    
+ISS :
+    host : 192.168.0.202
+    port : 3307
+    user : iss_all
+    passwd : ^V8E$#&2Cx
+    db :
+    charset : utf8
+    
+PDM :
+    host : 192.168.0.202
+    port : 3307
+    user : test_user
+    passwd : ronly2016@TEST
+    db : pdm_1014
+    charset : utf8
+
+OBS :
+    host : 10.40.6.26
+    port : 3306
+    user : gb_m_user
+    passwd : fEtWqVMzBC
+    db : obs_pay_base
+    charset : utf8
+    
+OMS :
+    host : 10.38.2.53
+    port : 3311
+    user : oms_dev_acc
+    passwd : omsERPtest
+    db : oms
+    charset : utf8
+    
+WMS :
+    host : 10.38.2.53
+    port : 3307
+    user : wms_dev_acc
+    passwd : erpWMStest
+    db : newerp
+    charset : utf8
