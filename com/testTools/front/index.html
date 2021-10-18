@@ -4,20 +4,36 @@
     <meta charset="UTF-8">
     <title>TestTools</title>
 </head>
+<script type="text/javascript">
+    function selectOms() {
+        let omsSystemBtn = document.getElementById("oms_iframe")
+        let soaSystemBtn = document.getElementById("soa_iframe")
+        omsSystemBtn.style["display"] = "inline"
+        soaSystemBtn.style["display"] = "none"
+    }
+
+    function selectSoa() {
+        var omsSystemBtn = document.getElementById("oms_iframe")
+        var soaSystemBtn = document.getElementById("soa_iframe")
+        omsSystemBtn.style["display"] = "none"
+        soaSystemBtn.style["display"] = "inline"
+    }
+</script>
 <body>
 <div>
-    <p>
-        <input type="button" value="OMS">
-        <input type="button" value="SOA">
-    </p>
-
+    <br>
+    <div>
+        <input id="oms_sys" type="button" value="OMS" onclick="selectOms()">
+        <input id="soa_sys" type="button" value="SOA" onclick="selectSoa()">
+    </div>
+    <br><br>
 </div>
 <div>
     <div>
-        <iframe src="oms_index.html" style="width:100%;height:900px;display:inline">
+        <iframe id="oms_iframe" class="sys_iframe" src="oms_index.html" style="width:100%;height:900px;display:inline">
 
         </iframe>
-        <iframe src="soa_index.html" width="1500" height="800" style="display:none">
+        <iframe id="soa_iframe" class="sys_iframe" src="soa_index.html" width="1500" height="800" style="display:none">
 
         </iframe>
     </div>

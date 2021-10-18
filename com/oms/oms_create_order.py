@@ -11,9 +11,8 @@ from com.util.cursor_util.DbTools import DbTools
 
 
 class CreateOrder:
-    def __init__(self):
+    def __init__(self, order_info):
         self.login = login_session('oms')
-        order_info = OmsOrderInfo()
         self.data = {
             'customer_id': order_info.customer_id,
             'order_sn': order_info.order_sn,
@@ -76,39 +75,51 @@ class CreateOrder:
         # 合计所有费用：商品总价+挂号费+保险费+运费
         self.account = account + float(self.data['registered_fee']) + float(self.data['insurance_fee']) + float(self.data['shipping_fee'])
 
-    def create_order(self, products_info):
+    def add_payments(self, payments):
         """
-        创建订单
-        :param products_info:
+        添加支付信息
+        :param payments:
         :return:
         """
-        self.add_products(products_info)
-        # 付款方式
-        pay_way = 9
-        # 付款id
-        pay_id = '20210810134055'
         # 先款后货订单
-        if self.data['settlement_id'] == 1:
+        if str(self.data['settlement_id']) == '1':
             payments = {
-                "payments[0][0]": pay_way,
-                "payments[0][1]": pay_id,
+                "payments[0][0]": payments['pay_way'],
+                "payments[0][1]": payments['pay_id'],
                 "payments[0][2]": self.account,
             }
             self.data.update(payments)
         # 账期订单
         else:
+            print("付款方式不支持")
             pass
+
+    def create_order(self, products_info, payments):
+        """
+        创建订单
+        :param payments: 支付信息
+        :param products_info: 产品信息
+        :return:
+        """
+        self.add_products(products_info)
+        self.add_payments(payments)
+
+        # 订单暂存区下订单接口
         url = "http://oms.hqygou.com/order/temp/insert"
         res = self.login.session.post(url, data=self.data)
         print(res.json())
+        if res.json()['content'] == '保存成功':
+            return self.data['order_sn']
 
 
 if __name__ == '__main__':
     # 注意价格不要有两位小数，python四舍五入不准导致价格不对，订单付款状态会不对
-    products = [
+    my_products = [
         {"sku": 148786003, "price": 2.6, "qty": 1, "remark": "产品备注"},
         {"sku": 1428786004, "price": 58.6, "qty": 1, "remark": "产品备注"},
         {"sku": 148786004, "price": 3.6, "qty": 1, "remark": "产品备注"},
     ]
-    get_order = CreateOrder()
-    get_order.create_order(products)
+    my_payments = {"pay_way": 9, "pay_id": "20210810134055", "account": 0}
+    my_order_info = OmsOrderInfo()
+    get_order = CreateOrder(my_order_info)
+    get_order.create_order(my_products, my_payments)

@@ -14,10 +14,10 @@
     },
     "匹配订单": {
       "desc": "匹配除CB外的正常订单",
-      "cmd": "php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php  45  --order_sn {}",
+      "cmd": "php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php  {}  --order_sn {}",
       "comment": "自营匹配脚本【包括SOA匹配订单】 --李军"
     },
-    "match_payment_info_nopay": {
+    "匹配cod订单": {
       "desc": "匹配服装、电子的COD订单",
       "cmd": "php /data/www/devel/oms/daemon/cod/payment/auto_match_payment_info_nopay.php -o {}",
       "comment": "自动匹配自营cod(货到付款) --李军"
@@ -82,12 +82,12 @@
       "cmd": "php /data/www/devel/oms/daemon/system/auto_send_message.php ",
       "comment": "去信数据写入队列表s_oms_send_email --李军"
     },
-    "推送邮件队列列表到SMS": {
+    "推送邮件队列列表到sms": {
       "desc": "去信数据写入邮件队列",
       "cmd": "php  /data/www/devel/oms/daemon/email/sync_unity_email_to_sms.php --sms_type {}",
       "comment": "去信数据写入邮件队列SMS --李军"
     },
-    "同步订单问题状态到WOS": {
+    "同步订单问题状态到wos": {
       "desc": "wos-状态同步到WOS-订单问题状态",
       "cmd": "flock -xn /tmp/OrderQuestion.lock -c 'php /data/www/devel/oms/daemon/wos/SyncDiffStatus/OrderQuestion.php -order_sn {}'",
       "comment": "wos-状态同步到WOS-订单问题状态 --李军"

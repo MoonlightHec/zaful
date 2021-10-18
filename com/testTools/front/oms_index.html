@@ -4,52 +4,79 @@
     <meta charset="UTF-8">
     <title>OMS</title>
 </head>
-<body>
 <style>
-    .order_info {
+    .order-info {
         width: 400px;
         border: 1px solid #ccc;
         float: left;
         box-sizing: border-box;
     }
+
+    .webmin-info {
+        width: 800px;
+        border: 1px solid #ccc;
+        float: left;
+        box-sizing: border-box;
+    }
 </style>
+<script>
+    function selectOmsFun() {
+        let selectFun = document.getElementById("select-fun")
+        let functionElements = document.getElementsByName("functions")
+        // 获取被选中的索引
+        let funX = selectFun.selectedIndex;
+        functionElements.forEach(function (value, index) {
+            let selectedFun = document.getElementById("fun" + index)
+            if (funX == index) {
+                selectedFun.style["display"] = "inline"
+            } else {
+                selectedFun.style["display"] = "none"
+            }
+        })
+    }
+</script>
+<body>
 <div>
     <div>选择功能</div>
     <div>
-        <select>
-            <option>oms造单</option>
-            <option>Webmin脚本</option>
+        <select id="select-fun" style="font-size: 20px">
+            <option value="0">oms造单</option>
+            <option value="1">Webmin脚本</option>
+            <option value="2" selected>订单全流程</option>
         </select>
-        <input type="submit">
+        <input type="submit" value="确定" style="font-size: 16px" onclick="selectOmsFun()">
         <br><br><br>
+        <hr/>
     </div>
-    <div style="display:inline">
-        <form action="http://localhost:8080/mytools/oms/create_order" target="_blank" method="POST">
-            <div class="order_info">
+    <div id="fun0" name="functions" style="display:none">
+        <form action="http://localhost:8080/myTools/oms/create_order" target="_blank" method="POST">
+            <div class="order-info">
                 <label style="height:25px;font-size:26px"><br>订单信息：</label>
                 <div>
                     <label><br>顾客编号：*</label>
-                    <input name="customer_id" value="775">
+                    <select name="customer-id">
+                        <option value="775">775</option>
+                    </select>
                 </div>
                 <div>
                     <label><br>订单编号：*</label>
-                    <input name="order_sn" disabled> (自动生成)
+                    <input name="order-sn" disabled> (自动生成)
                 </div>
                 <div>
                     <label><br>事业部：*</label>
-                    <select name="department_id">
+                    <select name="department-id">
                         <option value="42" selected>服装事业部</option>
                     </select>
                 </div>
                 <div>
                     <label><br>订单来源：*</label>
-                    <select name="order_from">
+                    <select name="order-from">
                         <option value="45" selected>zaful.com</option>
                     </select>
                 </div>
                 <div>
                     <label><br>订单类型：*</label>
-                    <select name="settlement_id" >
+                    <select name="settlement-id">
                         <option value="1" selected>先款后货</option>
                         <option value="2" disabled="disabled">预收定金</option>
                         <option value="3" disabled="disabled">账期</option>
@@ -57,63 +84,63 @@
                 </div>
                 <div>
                     <label><br>订单币种：*</label>
-                    <input name="order_currency" value="USD">
+                    <input name="order-currency" value="USD">
                 </div>
                 <div>
                     <label><br>订单汇率：*</label>
-                    <input name="order_currency_rate" value="1.0000000000">
+                    <input type="number" step="0.0000000001" name="order-currency-rate" value="1.0000000000">
                 </div>
                 <div>
                     <label><br>Email：*</label>
-                    <input name="receiver_email" value="lijun7@globalegrow.com">
+                    <input type="email" name="receiver-email" value="lijun7@globalegrow.com">
                 </div>
                 <div>
                     <label><br>姓名：*</label>
-                    <input name="receiver_name" value="李军7">
+                    <input name="receiver-name" value="李军7">
                 </div>
                 <div>
                     <label><br>详情地址1：*</label>
-                    <input name="receiver_address_1" value="address_1">
+                    <input name="receiver-address-1" value="address_1">
                 </div>
                 <div>
                     <label><br>详情地址2：*</label>
-                    <input name="receiver_address_2" value="address_2">
+                    <input name="receiver-address-2" value="address_2">
                 </div>
                 <div>
                     <label><br>城市：*</label>
-                    <input name="receiver_city" value="ADELSHOFEN">
+                    <input name="receiver-city" value="ADELSHOFEN">
                 </div>
                 <div>
                     <label><br>州/省：*</label>
-                    <input name="receiver_province" value="Alaska">
+                    <input name="receiver-province" value="Alaska">
                 </div>
                 <div>
                     <label><br>邮编：*</label>
-                    <input name="receiver_postcode" value="55555">
+                    <input name="receiver-postcode" value="55555">
                 </div>
                 <div>
                     <label><br>国家：*</label>
-                    <input name="receiver_country_code" value="DE">
+                    <input name="receiver-country-code" value="DE">
                 </div>
                 <div>
                     <label><br>电话：*</label>
-                    <input name="receiver_tel" value="545775444">
+                    <input type="tel" name="receiver-tel" value="545775444">
                 </div>
                 <div>
                     <label><br>挂号费：*</label>
-                    <input name="registered_fee" value="0.5">
+                    <input type="number" step="0.01" name="registered-fee" value="0.5">
                 </div>
                 <div>
                     <label><br>保险费：*</label>
-                    <input name="insurance_fee" value="0.1">
+                    <input type="number" step="0.01" name="insurance-fee" value="0.1">
                 </div>
                 <div>
                     <label><br>运费：*</label>
-                    <input name="shipping_fee" value="1.5">
+                    <input type="number" step="0.01" name="shipping-fee" value="1.5">
                 </div>
                 <div>
                     <label><br>是否需要发票：</label>
-                    <select name="is_invoice">
+                    <select name="is-invoice">
                         <option value="1">是</option>
                         <option value="0" selected>否</option>
                     </select>
@@ -124,79 +151,81 @@
                 </div>
                 <div>
                     <label><br>发货仓库：</label>
-                    <select name="stock_id">
+                    <select name="stock-id">
                         <option value="1">肇庆01仓</option>
                     </select>
                 </div>
                 <div>
                     <label><br>物流方式：</label>
-                    <select name="express_id">
-                        <option value="17" selected>中国邮政小包挂号</option>
+                    <select name="express-id">
+                        <option value="79">山西邮政小包挂号</option>
+                        <option value="2393" selected>加拿大专线(FZ)</option>
+                        <option value="17">中国邮政小包挂号</option>
                     </select>
                 </div>
                 <div style="display: none">
                     <label><br>express_appoint：</label>
-                    <input value="0" >
+                    <input value="0">
                 </div>
                 <div>
                     <label><br>是否拆包：</label>
-                    <select name="is_unpacking">
+                    <select name="is-unpacking">
                         <option value="1">是</option>
                         <option value="0" selected>否</option>
                     </select>
                 </div>
                 <div>
                     <label><br>客户父称：</label>
-                    <input name="customer_middle_name" value="">
+                    <input name="customer-middle-name" value="">
                 </div>
                 <div>
                     <label><br>护照编号：</label>
-                    <input name="customer_passport_serial" value="">
+                    <input name="customer-passport-serial" value="">
                 </div>
                 <div>
                     <label><br>护照号：</label>
-                    <input name="customer_passport" value="">
+                    <input name="customer-passport" value="">
                 </div>
                 <div>
                     <label><br>护照发证日期：</label>
-                    <input name="customer_passport_issue_date" value="">
+                    <input name="customer-passport-issue-date" value="">
                 </div>
 
             </div>
-            <div class="order_info">
+            <div class="order-info">
                 <div>
                     <label style="height:25px;font-size:26px"><br>支付方式:</label>
                     <div>
                         <label><br>支付方式：</label>
-                        <select name="pay_way">
+                        <select name="pay-way">
                             <option value="9" selected>客户预存款</option>
                         </select>
                     </div>
                     <div>
                         <label><br>付款id：</label>
-                        <select name="pay_id">
-                            <option value="20210810134055" selected>20210810134055</option>
+                        <select name="pay-id">
+                            <option value="20210810134055">20210810134055</option>
                         </select>
                     </div>
                 </div>
                 <div><br><br>
                     <label style="height:25px;font-size:26px">商品信息:</label>
-                    <input type="button" name="add_sku_btn" value="+"></input>
+                    <input type="button" name="add-sku-btn" value="+"></input>
                     <div>
                         <div>
                             <label><br>sku：*</label>
-                            <input name="sku" value="148786003">
+                            <input name="sku0" value="148786003">
                         </div>
                         <div>
                             <label><br>产品价格：*</label>
-                            <input name="price" value="2.1">
+                            <input type="number" step="0.1" name="price0" value="2.1">
                         </div>
                         <div>
                             <label><br>购买数量：*</label>
-                            <input name="qty" value="1">
+                            <input type="number" name="qty0" value="1">
                             <div>
                                 <label><br>备注：</label>
-                                <input name="remark" value="1">
+                                <input name="goods-remark0" value="sku备注">
                             </div>
                         </div>
                     </div>
@@ -209,9 +238,189 @@
             </div>
         </form>
     </div>
-    <div style="display:none">
+    <div id="fun1" name="functions" style="display:none">
+        <div class="webmin-info" style="width: 1000px">
+            <ol>
+                <li>同步配货单到wms
+                    <ul>
+                        <li>php /data/www/devel/oms/daemon/picking/picking_order_to_wms.php -o {配货单号}</li>
+                    </ul>
+                </li>
+                <br>
+                <li>匹配自营订单
+                    <ul>OMS匹配订单
+                        <li>php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php {站点} --order_sn {订单编号}</li>
+                        <li>站点：【RG：33，ZF：45】</li>
+                    </ul>
+                </li>
+                <br>
+                <li>推送异常工单到wos
+                    <ul>
+                        <li>php /data/www/devel/oms/daemon/wos/question/PushToWos.php</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        <div class="webmin-info">
+            <form action="http://localhost:8080/myTools/oms/webmin" target="_blank" method="POST">
+                <div>
+                    <select name="webmin-index" onclick="" style="font-size:18px;">
+                        <option value="同步配货单到wms">同步配货单到wms</option>
+                        <option value="匹配订单">匹配自营订单</option>
+                        <option value="推送异常工单到wos">推送异常工单到wos</option>
+                    </select>
+                </div>
+                <div>
+                    <br>
+                    <label>请输入参数（没有则不填）</label>
+                    <div>
+                        <input name="webmin-params1">
+                        <input name="webmin-params2">
+                        <input name="webmin-params3">
+                    </div>
+                </div>
+                <div>
+                    <br>
+                    <input type="submit" value="立即执行">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="fun2" name="functions" style="display: inline">
         <div>
-            这是webmin
+            <div>
+                <ol>
+                    <li>生成订单
+                        <div>
+                            <ul>
+                                各网站下单并推到OMS
+                            </ul>
+                            <br>
+                            <ul>
+                                OMS新建订单
+                            </ul>
+                        </div>
+                    </li>
+                    <hr/>
+                    <li>OMS匹配订单
+                        <div>
+                            <form action="http://localhost:8080/myTools/oms/webmin" target="_blank" method="POST">
+                                <br>
+                                <div style="width:200px;float:left;box-sizing:border-box;">
+                                    <label style="float:left;">订单类型:</label>
+                                    <select id="order-type" name="process-order-type" style="font-size:16px;" onclick="select_order_type()">
+                                        <script type="text/JavaScript">
+                                            function select_order_type() {
+                                                let orderTypeEle = document.getElementById("order-type")
+                                                let orderSourceEle = document.getElementById("order-source")
+                                                let orderType = orderTypeEle.options[orderTypeEle.selectedIndex].value
+                                                if ("匹配cod订单" == orderType) {
+                                                    for (let i = 1; i < orderSourceEle.length; i++) {
+                                                        orderSourceEle.options[i].style.display = "none";
+                                                    }
+                                                    orderSourceEle.options[0].selected = true
+                                                } else {
+                                                    for (let i = 0; i < orderSourceEle.length; i++) {
+                                                        orderSourceEle.options[i].style.display = "block";
+                                                    }
+                                                    orderSourceEle.options[1].selected = true
+                                                }
+                                            }
+                                        </script>
+                                        <option value="匹配订单">自营订单</option>
+                                        <option value="匹配cod订单">cod订单</option>
+                                    </select>
+                                </div>
+                                <div style="width: 400px;box-sizing:border-box;">
+                                    <label>订单来源:</label>
+                                    <select id="order-source" name="process-order-source" style="font-size:16px;">
+                                        <option value="">请选择</option>
+                                        <option value="45" selected>ZF</option>
+                                        <option value="33">RG</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div>
+                                    <label>订单编号：</label>
+                                    <input name="order-sn">
+                                </div>
+                                <br>
+                                <div>
+                                    <input type="submit" value="开始匹配">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <hr/>
+                    <li>OMS处理订单问题
+                        <div>
+                            <br>
+                            <form action="http://localhost:8080/myTools/oms/allProcess/dealQuestion" target="_blank" method="POST">
+                                <div>
+                                    <label>订单编号：</label>
+                                    <input name="order-sn">
+                                    <input type="submit" value="开始处理">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <hr/>
+                    <li>OMS生成配货单
+                        <div>
+                            <form action="http://localhost:8080/myTools/oms/allProcess/createPickingOrder" target="_blank" method="POST">
+                                <br>
+                                <div style="width:200px;float:left;box-sizing:border-box;">
+                                    <label style="float:left;">仓库:</label>
+                                    <select name="stock-id" style="font-size:16px;" onclick="select_order_type()">
+                                        <option value="1929">肇庆-01</option>
+                                    </select>
+                                </div>
+                                <div style="width: 400px;box-sizing:border-box;">
+                                    <label>物流:</label>
+                                    <select name="express-id" style="font-size:16px;">
+                                        <option value="79">山西邮政小包挂号</option>
+                                        <option value="2393">加拿大专线(FZ)</option>
+                                        <option value="17">中国邮政小包挂号</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div>
+                                    <label>订单编号：</label>
+                                    <input name="order-sn">
+                                </div>
+                                <br>
+                                <div>
+                                    <input type="submit" value="立即生成">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <hr/>
+                    <li>OMS同步配货数据到WMS
+                        <ul>
+                            <form action="http://localhost:8080/myTools/oms/allProcess/postPickingInfo" target="_blank" method="POST">
+                                <li>同步配货单到WMS</li>
+                                <lable>订单编号：</lable>
+                                <input name="order-sn" value="">
+                                <input type="submit" value="立即同步">
+                            </form>
+                        </ul>
+                        <br>
+                        <ul>
+                            <form action="http://localhost:8080/myTools/oms/allProcess/getPickingInfo" target="_blank" method="POST">
+                                <li>WMS生成包裹</li>
+                                <lable>订单编号：</lable>
+                                <input name="order-sn" value="">
+                                <input type="submit" value="立即生成">
+                            </form>
+                        </ul>
+                    </li>
+                    <hr/>
+                    <li>WMS接收配货单
+
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
 

@@ -42,3 +42,6 @@ class OmsOrderInfo:
         self.shipping_fee = 1.5
         self.is_invoice = 0
         self.remark = None
+
+
+

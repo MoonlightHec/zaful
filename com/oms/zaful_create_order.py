@@ -10,6 +10,10 @@ import hashlib
 import requests
 
 # 禁用安全警告信息；requests忽略ssl证书后，控制台不再输出警告信息
+from com.oms.WebminObj import WebminObj
+from com.util.cursor_util.DbTools import DbTools
+from com.util.http_utils import HttpRequest
+
 requests.packages.urllib3.disable_warnings()
 
 
@@ -47,14 +51,14 @@ def audit_payment(order_sn):
     del db_tools
 
 
-def webmin_job(webmin_name=None, *args):
+def webmin_job(*args):
     """
     5.匹配订单
     :param webmin_name: 脚本名称
     :param order_sn: 订单编号
     :return:
     """
-    web_script = WebminObj('oms', webmin_name)
+    web_script = WebminObj('oms')
     web_script.run_script(*args)
 
 
@@ -93,14 +97,14 @@ def joint_order_2oms(order_sn, step=0):
 
 
 if __name__ == '__main__':
-    oms_order_sn = 'U2110102021599653'
+    oms_order_sn = 'U2110151634282684'
     # 网站MQ推送订单到oms
-    push_mq(oms_order_sn, joint=False)
+    # push_mq(oms_order_sn, joint=False)
 
     # oms接收订单
-    webmin_job(webmin_name='同步soa订单')
+    webmin_job('同步soa订单', oms_order_sn)
     # 审核付款单
-    audit_payment(oms_order_sn)
+    # audit_payment(oms_order_sn)
     """
     # 匹配订单
     # match_payment_info 正常订单

@@ -5,6 +5,8 @@
 # @File : WebminObj.py
 # @desc :
 """
+import os
+
 import requests
 from flask import json
 
@@ -69,14 +71,17 @@ class WebminObj:
         self.headers = switcher.get(app_name)()
 
         # 获取脚本通用参数
-        with open('./resource/webmin_script_data.json', 'r', encoding='utf-8') as data_stream:
+        self.absolute_path = os.path.dirname(os.path.abspath(__file__))
+        s = self.absolute_path + '/resource/webmin_script_data.json'
+        with open(f'{self.absolute_path}/resource/webmin_script_data.json', 'r', encoding='utf-8') as data_stream:
             self.data = json.load(data_stream)
         # 获取要执行的脚本参数
-        with open('./resource/webmin_args.json', 'r', encoding='utf8') as params_stream:
+        webmin_args_path = self.absolute_path + './resource/webmin_args.json'
+        with open(f'{self.absolute_path}./resource/webmin_args.json', 'r', encoding='utf8') as params_stream:
             self.request_info = json.load(params_stream)[app_name]
 
     def run_script(self, script_name, *args):
-        params = self.request_info[script_name]
+        params = self.request_info[script_name.lower()]
         self.headers['Referer'] = self.request_info['config']['Referer']
         self.data['idx'] = self.request_info['config']['idx']
         self.data['user'] = self.request_info['config']['user']
@@ -95,8 +100,9 @@ class WebminObj:
             print("\n----------------------------开始执行脚本----------------------------")
             exec_res = requests.get(url=execute_url, headers=self.headers, verify=False)
             print(exec_res.text)
-            with open('./resource/webmin_script_result.html', 'w', encoding='utf-8') as fd:
+            with open(f'{self.absolute_path}./resource/webmin_script_result.html', 'w', encoding='utf-8') as fd:
                 fd.write(exec_res.text)
+            return exec_res.text
         else:
             print("\n----------------------------脚本保存失败----------------------------")
 
@@ -110,11 +116,14 @@ if __name__ == '__main__':
     # 退款到电子钱包 param：退款申请编号
     # 推送邮件队列列表到SMS param：【ticket_receive】
     # 自动去信加入队列
+    # 匹配订单
+    # 同步配货单到wms
     """
     web_script = WebminObj(app_name='oms')
+    order_sn = 'Z2110150642237418'
     try:
-        # web_script.run_script('地址异常生成电联工单', 'U2110102021599653')
-        web_script.run_script('推送异常工单到wos')
+        web_script.run_script('匹配订单', 45, order_sn)
+        # web_script.run_script('推送异常工单到wos')
         # web_script.run_script('推送邮件队列列表到SMS', 'ticket_receive')
     except IndexError:
         print("参数个数错误")
