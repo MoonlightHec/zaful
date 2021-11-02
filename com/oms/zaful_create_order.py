@@ -76,33 +76,31 @@ def joint_order_2oms(order_sn, step=0):
     :param step:
     :return:
     """
-    md5(order_sn)
+    oms_script = WebminObj(app_name='oms')
     if step == 0:
         # 网站推送订单
         push_mq(order_sn, joint=True)
     elif step == 1:
         # oms导入脚本
-        web_soaOrder_received = WebminObj('oms', 'soa_mq_oms_received')
-        web_soaOrder_received.run_script()
+        oms_script.run_script('soa_mq_oms_received')
     elif step == 2:
         # 投递脚本
-        web_soaOrder_intoMq = WebminObj('oms', 'soa_order_into_mq')
-        web_soaOrder_intoMq.run_script(order_sn, md5(order_sn)[:2])
+        oms_script.run_script('soa_order_into_mq', order_sn, md5(order_sn)[:2])
     elif step == 3:
         # 消费脚本
-        web_soaOrder_into_oms = WebminObj('oms', 'get_soa_mq_into_oms')
-        web_soaOrder_into_oms.run_script()
+        oms_script.run_script('get_soa_mq_into_oms')
     else:
         return
 
 
 if __name__ == '__main__':
-    oms_order_sn = 'U2110151634282684'
+    oms_order_sn = 'U2111020312034404'
+    oms_script = WebminObj(app_name='oms')
     # 网站MQ推送订单到oms
-    # push_mq(oms_order_sn, joint=False)
+    # push_mq(oms_order_sn, joint=True)
 
     # oms接收订单
-    webmin_job('同步soa订单', oms_order_sn)
+    oms_script.run_script('同步soa订单')
     # 审核付款单
     # audit_payment(oms_order_sn)
     """
@@ -113,4 +111,4 @@ if __name__ == '__main__':
     # webmin_job('匹配订单', oms_order_sn)
 
     # 联合订单推送到oms
-    # joint_order_2oms(oms_order_sn, step=1)
+    joint_order_2oms(oms_order_sn, step=3)

@@ -3,14 +3,15 @@
 # @Time : 2021/10/13 10:44 
 # @Author : lijun7 
 # @File : oms_create_order.py
-# @desc :
+# @desc : oms创建订单
 """
-from com.get_session import login_session
+from com.util.get_session import login_session
 from com.oms.oms_create_order_info import OmsOrderInfo
 from com.util.cursor_util.DbTools import DbTools
+from com.util.my_logging import logger
 
 
-class CreateOrder:
+class OmsCreateOrder:
     def __init__(self, order_info):
         self.login = login_session('oms')
         self.data = {
@@ -71,7 +72,7 @@ class CreateOrder:
                 account = account + int(product["qty"]) * float(product["price"])
                 i += 1
             else:
-                print(f"该产品不存在：{product['sku']}")
+                logger.info(f"该产品不存在：{product['sku']}")
         # 合计所有费用：商品总价+挂号费+保险费+运费
         self.account = account + float(self.data['registered_fee']) + float(self.data['insurance_fee']) + float(self.data['shipping_fee'])
 
@@ -91,7 +92,7 @@ class CreateOrder:
             self.data.update(payments)
         # 账期订单
         else:
-            print("付款方式不支持")
+            logger.info("付款方式不支持")
             pass
 
     def create_order(self, products_info, payments):
@@ -107,8 +108,8 @@ class CreateOrder:
         # 订单暂存区下订单接口
         url = "http://oms.hqygou.com/order/temp/insert"
         res = self.login.session.post(url, data=self.data)
-        print(res.json())
         if res.json()['content'] == '保存成功':
+            logger.info(self.data['order_sn'])
             return self.data['order_sn']
 
 
@@ -121,5 +122,5 @@ if __name__ == '__main__':
     ]
     my_payments = {"pay_way": 9, "pay_id": "20210810134055", "account": 0}
     my_order_info = OmsOrderInfo()
-    get_order = CreateOrder(my_order_info)
+    get_order = OmsCreateOrder(my_order_info)
     get_order.create_order(my_products, my_payments)

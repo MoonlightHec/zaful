@@ -19,37 +19,22 @@
         box-sizing: border-box;
     }
 </style>
-<script>
-    function selectOmsFun() {
-        let selectFun = document.getElementById("select-fun")
-        let functionElements = document.getElementsByName("functions")
-        // 获取被选中的索引
-        let funX = selectFun.selectedIndex;
-        functionElements.forEach(function (value, index) {
-            let selectedFun = document.getElementById("fun" + index)
-            if (funX == index) {
-                selectedFun.style["display"] = "inline"
-            } else {
-                selectedFun.style["display"] = "none"
-            }
-        })
-    }
-</script>
+<script type="text/javascript" src="tools.js"></script>
 <body>
 <div>
     <div>选择功能</div>
     <div>
         <select id="select-fun" style="font-size: 20px">
-            <option value="0">oms造单</option>
+            <option value="0" selected>oms造单</option>
             <option value="1">Webmin脚本</option>
-            <option value="2" selected>订单全流程</option>
+            <option value="2">订单全流程</option>
         </select>
         <input type="submit" value="确定" style="font-size: 16px" onclick="selectOmsFun()">
         <br><br><br>
         <hr/>
     </div>
-    <div id="fun0" name="functions" style="display:none">
-        <form action="http://localhost:8080/myTools/oms/create_order" target="_blank" method="POST">
+    <div id="fun0" name="functions" style="display:inline">
+        <form action="http://10.8.34.218:8080/myTools/oms/create_order" target="_blank" method="POST">
             <div class="order-info">
                 <label style="height:25px;font-size:26px"><br>订单信息：</label>
                 <div>
@@ -72,6 +57,8 @@
                     <label><br>订单来源：*</label>
                     <select name="order-from">
                         <option value="45" selected>zaful.com</option>
+                        <option value="33">rosegal.com</option>
+                        <option value="18">dresslily.com</option>
                     </select>
                 </div>
                 <div>
@@ -250,7 +237,7 @@
                 <li>匹配自营订单
                     <ul>OMS匹配订单
                         <li>php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php {站点} --order_sn {订单编号}</li>
-                        <li>站点：【RG：33，ZF：45】</li>
+                        <li>站点：【RG：33，ZF：45，DL：18】</li>
                     </ul>
                 </li>
                 <br>
@@ -259,15 +246,36 @@
                         <li>php /data/www/devel/oms/daemon/wos/question/PushToWos.php</li>
                     </ul>
                 </li>
+                <br>
+                <li>创建checkout账单申述工单
+                    <ul>
+                        <li>php /data/www/devel/oms/daemon/case/auto/process_checkout.php</li>
+                    </ul>
+                </li>
+                <br>
+                <li>物流商限额回收配货单
+                    <ul>
+                        <li> php daemon/picking/picking_order_auto_cancel_balance.php -o {配货单号}</li>
+                    </ul>
+                </li>
+                <br>
+                <li>消费WMS推送的MQ发货数据
+                    <ul>
+                        <li> php /data/www/oms/daemon/interface_mq/wms/MQ_ShippingOrderController.php</li>
+                    </ul>
+                </li>
             </ol>
         </div>
         <div class="webmin-info">
-            <form action="http://localhost:8080/myTools/oms/webmin" target="_blank" method="POST">
+            <form action="http://10.8.34.218:8080/myTools/oms/webmin" target="_blank" method="POST">
                 <div>
                     <select name="webmin-index" onclick="" style="font-size:18px;">
                         <option value="同步配货单到wms">同步配货单到wms</option>
                         <option value="匹配订单">匹配自营订单</option>
                         <option value="推送异常工单到wos">推送异常工单到wos</option>
+                        <option value="process_checkout">创建checkout账单申述工单</option>
+                        <option value="picking_order_recycle">物流商限额回收配货单</option>
+                        <option value="shipping_order">消费WMS推送的MQ发货数据</option>
                     </select>
                 </div>
                 <div>
@@ -281,12 +289,12 @@
                 </div>
                 <div>
                     <br>
-                    <input type="submit" value="立即执行">
+                    <input type="submit" value="立即执行" style="font-size: 16px">
                 </div>
             </form>
         </div>
     </div>
-    <div id="fun2" name="functions" style="display: inline">
+    <div id="fun2" name="functions" style="display: none">
         <div>
             <div>
                 <ol>
@@ -304,7 +312,7 @@
                     <hr/>
                     <li>OMS匹配订单
                         <div>
-                            <form action="http://localhost:8080/myTools/oms/webmin" target="_blank" method="POST">
+                            <form action="http://10.8.34.218:8080/myTools/oms/webmin" target="_blank" method="POST">
                                 <br>
                                 <div style="width:200px;float:left;box-sizing:border-box;">
                                     <label style="float:left;">订单类型:</label>
@@ -337,6 +345,7 @@
                                         <option value="">请选择</option>
                                         <option value="45" selected>ZF</option>
                                         <option value="33">RG</option>
+                                        <option value="18">DL</option>
                                     </select>
                                 </div>
                                 <br>
@@ -355,7 +364,7 @@
                     <li>OMS处理订单问题
                         <div>
                             <br>
-                            <form action="http://localhost:8080/myTools/oms/allProcess/dealQuestion" target="_blank" method="POST">
+                            <form action="http://10.8.34.218:8080/myTools/oms/allProcess/dealQuestion" target="_blank" method="POST">
                                 <div>
                                     <label>订单编号：</label>
                                     <input name="order-sn">
@@ -367,7 +376,7 @@
                     <hr/>
                     <li>OMS生成配货单
                         <div>
-                            <form action="http://localhost:8080/myTools/oms/allProcess/createPickingOrder" target="_blank" method="POST">
+                            <form action="http://10.8.34.218:8080/myTools/oms/allProcess/createPickingOrder" target="_blank" method="POST">
                                 <br>
                                 <div style="width:200px;float:left;box-sizing:border-box;">
                                     <label style="float:left;">仓库:</label>
@@ -375,13 +384,18 @@
                                         <option value="1929">肇庆-01</option>
                                     </select>
                                 </div>
-                                <div style="width: 400px;box-sizing:border-box;">
-                                    <label>物流:</label>
-                                    <select name="express-id" style="font-size:16px;">
-                                        <option value="79">山西邮政小包挂号</option>
-                                        <option value="2393">加拿大专线(FZ)</option>
-                                        <option value="17">中国邮政小包挂号</option>
-                                    </select>
+                                <div style="width: 1000px;box-sizing:border-box;">
+                                    <label>物流ID:</label>
+                                    <!--                                    <select name="express-id" style="font-size:16px;">-->
+                                    <!--                                        <option value="79">山西邮政小包挂号</option>-->
+                                    <!--                                        <option value="2393" selected>加拿大专线(FZ)</option>-->
+                                    <!--                                        <option value="118">加拿大专线(UBI)</option>-->
+                                    <!--                                        <option value="17">中国邮政小包挂号</option>-->
+                                    <!--                                        <option value="1664">英国专线(XW-UBI)</option>-->
+                                    <!--                                        <option value="508">澳洲专线(HQ)(AUEXPHQ)</option>-->
+                                    <!--                                    </select>-->
+                                    <input name="express-id">
+                                    <label>(oms.t_oms_express表id)</label>
                                 </div>
                                 <br>
                                 <div>
@@ -398,7 +412,7 @@
                     <hr/>
                     <li>OMS同步配货数据到WMS
                         <ul>
-                            <form action="http://localhost:8080/myTools/oms/allProcess/postPickingInfo" target="_blank" method="POST">
+                            <form action="http://10.8.34.218:8080/myTools/oms/allProcess/postPickingInfo" target="_blank" method="POST">
                                 <li>同步配货单到WMS</li>
                                 <lable>订单编号：</lable>
                                 <input name="order-sn" value="">
@@ -407,16 +421,17 @@
                         </ul>
                         <br>
                         <ul>
-                            <form action="http://localhost:8080/myTools/oms/allProcess/getPickingInfo" target="_blank" method="POST">
+                            <form action="http://10.8.34.218:8080/myTools/oms/allProcess/getPickingInfo" target="_blank" method="POST">
                                 <li>WMS生成包裹</li>
                                 <lable>订单编号：</lable>
                                 <input name="order-sn" value="">
                                 <input type="submit" value="立即生成">
                             </form>
                         </ul>
+
                     </li>
                     <hr/>
-                    <li>WMS接收配货单
+                    <li>......
 
                     </li>
                 </ol>

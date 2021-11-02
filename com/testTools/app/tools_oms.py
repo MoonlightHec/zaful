@@ -5,13 +5,13 @@
 # @File : tools_oms.py
 # @desc :
 """
-from com.oms.oms_create_order import CreateOrder
+from com.oms.oms_create_order import OmsCreateOrder
 from com.oms.oms_create_order_info import OmsOrderInfo
 
 
-def create_user_order(user_order_info):
+def create_oms_order(user_order_info):
     """
-    用前端页面获取到的数据下订单
+    创建oms订单
     :param user_order_info:
     :return:
     """
@@ -54,6 +54,6 @@ def create_user_order(user_order_info):
         "pay_way": user_order_info["pay-way"],
         "pay_id": user_order_info["pay-id"],
     }
-    get_order = CreateOrder(order_info)
+    get_order = OmsCreateOrder(order_info)
     # 创建订单
     return get_order.create_order(products, payments)

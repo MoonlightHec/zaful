@@ -36,7 +36,6 @@ class AWX_Test:
         }
         res = requests.post(url=url, headers=headers)
         token = res.json().get('token')
-        # print("login token:\n{}".format(token))
         return token
 
     def get_payment(self, transaction_id):

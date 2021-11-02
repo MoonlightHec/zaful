@@ -6,10 +6,11 @@
 # @desc :
 """
 import json
-import logging
 from json import JSONDecodeError
 
 import requests
+
+from com.util.my_logging import logger
 
 
 class HttpRequest:
@@ -71,5 +72,5 @@ class HttpRequest:
             response = requests.post(url=url, headers=headers, cookies=cookies, files=body)
         preview = json.dumps(response.json(), sort_keys=False, indent=4, separators=(',', ':'), ensure_ascii=False)
         output = {'request': url, 'body': body, 'response': response.json(), 'preview': preview}
-        logging.info(output.get('response'))
+        logger.info(output.get('response'))
         return output

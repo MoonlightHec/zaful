@@ -4,7 +4,75 @@
     <meta charset="UTF-8">
     <title>SOA</title>
 </head>
+<script type="text/javascript" src="tools.js"></script>
 <body>
-<p>这是SOA</p>
+<div>
+    <div>选择功能</div>
+    <div>
+        <select id="select-fun" style="font-size: 20px">
+            <option value="0" selected>checkout订单</option>
+            <option value="1" disabled>2</option>
+            <option value="2" disabled>3</option>
+        </select>
+        <input type="submit" value="确定" style="font-size: 16px" onclick="selectOmsFun()">
+        <br><br><br>
+        <hr/>
+    </div>
+    <div id="fun0" name="functions" style="display:inline">
+        <div>
+            <div>
+                <br>
+                <form action="http://10.8.34.218:8080/myTools/soa/create_order" target="_blank" method="POST">
+                    <div>
+                        <label>国家：</label>
+                        <select name="country-name" onclick="" style="font-size:16px;">
+                            <option value="美国">美国(US)</option>
+                            <option value="英国">英国(GB)</option>
+                            <option value="荷兰">荷兰(NL)</option>
+                            <option value="德国">德国(DE)</option>
+                            <option value="小日本">小日本(JP)</option>
+                            <option value="菲律宾">菲律宾(PH)</option>
+                            <option value="波兰">波兰(PL)</option>
+                            <option value="澳大利亚">澳大利亚(AU)</option>
+                            <option value="美国accept">美国accept</option>
+                            <option value="美国reject">美国reject</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label>币种：</label>
+                        <input name="currency-code" value="USD">
+                    </div>
+                    <br>
+                    <div>
+                        <label>美元价格：</label>
+                        <input name="price" value="58.99">
+                    </div>
+                    <br>
+                    <div>
+                        <label>网站：</label>
+                        <select name="site-code" onclick="" style="font-size:16px;">
+                            <option value="ZF">ZF</option>
+                            <option value="RG" disabled>RG</option>
+                            <option value="D网" disabled>D网</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <input type="submit" value="生成订单" style="font-size:16px;">
+                    </div>
+                </form>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div id="fun1" name="functions" style="display:none">
+        2
+    </div>
+    <div id="fun2" name="functions" style="display:none">
+        3
+    </div>
+</div>
 </body>
 </html>

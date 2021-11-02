@@ -9,6 +9,8 @@ import re
 
 import requests
 
+from com.util.my_logging import logger
+
 
 class login_session:
     def __init__(self, app_name, user_name="lijun7", password="lijun789"):
@@ -56,7 +58,7 @@ class login_session:
         except AssertionError:
             print("系统登录失败\n" + check_res.text)
             return
-        print("系统登录成功")
+        logger.info("系统登录成功")
         return self.session
 
     def get_wos_session(self):

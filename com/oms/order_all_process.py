@@ -7,8 +7,9 @@
 """
 import requests
 
-from com.get_session import login_session
+from com.util.get_session import login_session
 from com.util.cursor_util.DbTools import DbTools
+from com.util.my_logging import logger
 
 
 class OrderAllProcess:
@@ -91,7 +92,11 @@ class OrderAllProcess:
             "order_sn": self.order_sn,
             "stock_id": stock_id
         }
-        goods_data = oms_session.session.post(order_data_url, order_data).json()['data']['goods']
+        try:
+            res = oms_session.session.post(order_data_url, order_data).json()
+            goods_data = res['data']['goods']
+        except KeyError:
+            return res
 
         # 发起配货请求
         # 获取请求参数
@@ -129,4 +134,4 @@ class OrderAllProcess:
 if __name__ == '__main__':
     # process = OrderAllProcess('Z2012222036285905')
     process = OrderAllProcess('U2110181634521325')
-    print(process.oms_piking_order().json())
+    logger.info(process.get_picking_sn())

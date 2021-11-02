@@ -22,6 +22,11 @@
       "cmd": "php /data/www/devel/oms/daemon/cod/payment/auto_match_payment_info_nopay.php -o {}",
       "comment": "自动匹配自营cod(货到付款) --李军"
     },
+    "匹配第三方订单": {
+      "desc": "匹配第三方订单",
+      "cmd": "php /data/www/devel/oms/daemon/payment/auto_match_payment_info_platform.php  -o  {}",
+      "comment": "匹配第三方订单"
+    },
     "soa_mq_oms_received": {
       "desc": "联合订单导单脚本",
       "cmd": "flock -xn /tmp/MQ_SoaOrderCancelReceivedUrgent_zaful.lock -c 'php /data/www/devel/oms/daemon/interface_mq/soa/MQ_SoaOrderCancelReceivedUrgent.php --mq_client web_zf_v2_direct_string  --receive_name unionOrderPush_OMS  --mq_send oms_to_web_v2_direct_json  --send_name orderError_SOA_ZF'",
@@ -54,7 +59,7 @@
     },
     "同步soa订单": {
       "desc": "接收soa订单",
-      "cmd": "flock -xn /tmp/MQ_OrderControllerZF.lock -c 'php /data/www/devel/oms/daemon/interface_mq/web/MQ_OrderController.php 45'",
+      "cmd": "flock -xn /tmp/MQ_OrderControllerZF.lock -c 'php /data/www/devel/oms/daemon/interface_mq/web/MQ_OrderController.php {}'",
       "comment": "同步soa订单 --李军"
     },
     "同步soa付款单": {
@@ -91,6 +96,21 @@
       "desc": "wos-状态同步到WOS-订单问题状态",
       "cmd": "flock -xn /tmp/OrderQuestion.lock -c 'php /data/www/devel/oms/daemon/wos/SyncDiffStatus/OrderQuestion.php -order_sn {}'",
       "comment": "wos-状态同步到WOS-订单问题状态 --李军"
+    },
+    "process_checkout": {
+      "desc": "checkout case中间数据处理",
+      "cmd": "php /data/www/devel/oms/daemon/case/auto/process_checkout.php",
+      "comment": "处理case数据"
+    },
+    "picking_order_recycle": {
+      "desc": "物流商限额回收配货单",
+      "cmd": "php /data/www/devel/oms/daemon/picking/picking_order_auto_cancel_balance.php -o {}",
+      "comment": "物流商限额回收配货单"
+    },
+    "shipping_order": {
+      "desc": "消费wms发货数据mq",
+      "cmd": "php /data/www/oms/daemon/interface_mq/wms/MQ_ShippingOrderController.php",
+      "comment": "消费wms发货数据mq"
     }
   },
   "sms": {

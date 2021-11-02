@@ -107,7 +107,7 @@ class WebminObj:
             print("\n----------------------------脚本保存失败----------------------------")
 
 
-if __name__ == '__main__':
+def run_oms():
     """
     # 同步soa订单
     # 地址异常生成电联工单
@@ -119,11 +119,28 @@ if __name__ == '__main__':
     # 匹配订单
     # 同步配货单到wms
     """
-    web_script = WebminObj(app_name='oms')
-    order_sn = 'Z2110150642237418'
+    oms_script = WebminObj(app_name='oms')
+    order_sn = 'hgfoahwou445 '
     try:
-        web_script.run_script('匹配订单', 45, order_sn)
-        # web_script.run_script('推送异常工单到wos')
-        # web_script.run_script('推送邮件队列列表到SMS', 'ticket_receive')
+        # oms_script.run_script('匹配第三方订单', order_sn)
+        # oms_script.run_script('推送异常工单到wos')
+        oms_script.run_script('推送邮件队列列表到SMS', 'ticket_receive')
     except IndexError:
         print("参数个数错误")
+
+
+def run_sms():
+    """
+    # 同步soa订单
+    """
+    sms_script = WebminObj(app_name='sms')
+    order_sn = 'hgfoahwou445 '
+    try:
+        sms_script.run_script('')
+    except IndexError:
+        print("参数个数错误")
+
+
+if __name__ == '__main__':
+    run_oms()
+    # run_sms()

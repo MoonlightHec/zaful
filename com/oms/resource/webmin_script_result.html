@@ -24,12 +24,31 @@ window.defaultStatus="oms logged into Webmin 1.810 on siyouyun-prod-web-01006003
 </td>
 <td id='headln2c' align=center width=70%><font size=+2>执行自动作业</font></td>
 <td id='headln2r' width=15% valign=top align=right></td></tr></table>
-<p>命令 <tt>php /data/www/devel/oms/daemon/picking/picking_order_to_wms.php -o U2110181634521325186986183</tt> 的输出结果…<p>
-<pre>SELECT COUNT(1) AS total FROM o_oms_order_picking_info WHERE is_tran_wms IN (0,2) AND is_temp &#61; 0 AND express_id &gt; 0 AND (is_to_pms &#61;3 OR is_to_pms&#61;4) AND express_id not in (23,36)   and order_number_new &#61; &#39;U2110181634521325186986183&#39; and stock_id not in (20, 1126, 1352, 2111, 2118, 2119, 2120, 153, 155, 190, 44, 157, 3, 913, 2109, 2167)
-Total : 1
-U2110181634521325-45-1929
-配货单(U2110181634521325186986183)同步完毕
-</pre>
+<p>命令 <tt>php /data/www/devel/oms/daemon/payment/auto_match_payment_info.php  45  --order_sn U2111021635848433</tt> 的输出结果…<p>
+<pre>20210810134055211102182033&lt;/br&gt;PHP Strict Standards:  Declaration of Finance_Model_ExcessLimit::save() should be compatible with Oms_Model_Base::save() in /data/www/devel/oms/Apps/finance/models/ExcessLimit.php on line 128
+
+Strict Standards: Declaration of Finance_Model_ExcessLimit::save() should be compatible with Oms_Model_Base::save() in /data/www/devel/oms/Apps/finance/models/ExcessLimit.php on line 128
+
+订单:U2111021635848433:付款单(source:4):20210810134055211102182033,原汇率为:1,usd 金额为:102.1, 本币金额为: 102.10
+
+        将要更新的信息:array (
+  &#39;order_sn&#39; &#61;&gt; &#39;U2111021635848433&#39;,
+  &#39;usd_rate&#39; &#61;&gt; 1,
+  &#39;total_us&#39; &#61;&gt; 102.099999999999994315658113919198513031005859375,
+  &#39;matched_status&#39; &#61;&gt; 2,
+  &#39;matched_time&#39; &#61;&gt; &#39;2021-11-02 18:28:35&#39;,
+  &#39;matched_count&#39; &#61;&gt; 1,
+  &#39;matched_result&#39; &#61;&gt; &#39;匹配成功&#39;,
+)
+订单:U2111021635848433:付款单(source:4):20210810134055211102182033,过滤后的更新信息为:array (
+  &#39;order_sn&#39; &#61;&gt; &#39;U2111021635848433&#39;,
+  &#39;usd_rate&#39; &#61;&gt; 1,
+  &#39;total_us&#39; &#61;&gt; 102.099999999999994315658113919198513031005859375,
+  &#39;matched_status&#39; &#61;&gt; 2,
+  &#39;matched_time&#39; &#61;&gt; &#39;2021-11-02 18:28:35&#39;,
+  &#39;matched_count&#39; &#61;&gt; 1,
+  &#39;matched_result&#39; &#61;&gt; &#39;匹配成功&#39;,
+)保存成功</pre>
 </div><p>
 <a href="edit_cron.cgi?idx=1191"><img alt="<-" align="top"src="/images/left.gif"></a>
 &nbsp;<a href="edit_cron.cgi?idx=1191">返回到 自动作业</a>

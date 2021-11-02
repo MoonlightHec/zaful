@@ -10,27 +10,23 @@
 from com.util.cursor_util.DbTools import DbTools
 
 
-def get_pay_info(data=('U2106010336010938', '')):
-    # 查询订单信息(order_sn,paySn)
+def get_pay_info(sql_par):
+    """
+    根据字段名查询订单数据
+    :param sql_par:
+    :return:
+    """
     db = DbTools('PAY')
     cursor = db.cursor
-    sql_par = {}
     print(
         "id    parent_trade_sn        trade_sn               parent_order_sn      pay_sn            site_code pay_status channel_code transaction_id\t")
     # 获取sql查询语句及where条件
-    if data[0]:
-        sql_par[0] = 'parent_order_sn'
-        sql_par[1] = data[0]
-    else:
-        sql_par[0] = 'pay_sn'
-        sql_par[1] = data[1]
-
     pay_sn_list = []
     order_sn_list = []
     for index in range(1, 65):
         table_num = 'pay_gateway_' + str(index)
         sql = "SELECT id,parent_trade_sn,trade_sn,parent_order_sn,pay_sn,site_code,pay_status,channel_code,transaction_id FROM %s WHERE %s = '%s';"
-        cursor.execute(sql % (table_num, sql_par[0], sql_par[1]))
+        cursor.execute(sql % (table_num, sql_par['field'], sql_par['value']))
         if cursor.rowcount:
             for row in cursor.fetchall():
                 print("%s %s %s %s %s      %s   %s   %s   %s\t" % row)
@@ -45,4 +41,8 @@ def get_pay_info(data=('U2106010336010938', '')):
 
 
 if __name__ == '__main__':
-    get_pay_info(data=('U2110102021599653', ''))
+    # 常用字段：parent_order_sn,paySn,transaction_id
+    get_pay_info(sql_par={
+        'field': 'parent_order_sn',
+        'value': 'L2111020224199179'
+    })
